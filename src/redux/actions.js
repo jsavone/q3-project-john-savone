@@ -3,7 +3,9 @@ import axios from 'axios'
 export const FETCH_NOTIFICATIONS = 'FETCH_NOTIFICATIONS'
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS'
 export const FETCH_REGISTRIES = 'FETCH_REGISTRIES'
+export const FETCH_GUESTS = 'FETCH_GUESTS'
 export const CREATE_REGISTRY = 'CREATE_REGISTRY'
+export const CREATE_GUEST = 'CREATE_GUEST'
 
 export const fetchNotifications = () => {
   return( dispatch) => {
@@ -41,12 +43,37 @@ export const fetchRegistries = () => {
   }
 }
 
+export const fetchGuests = () => {
+  return( dispatch) => {
+    axios.get('http://localhost:8000/registries/guests')
+    .then((response) => {
+      dispatch({
+        type: FETCH_GUESTS,
+        payload: response.data
+      })
+    })
+  }
+}
+
 export const createRegistry = (registry) => {
   return( dispatch) => {
     axios.post('http://localhost:8000/registries', registry)
     .then((response) => {
       dispatch({
         type: CREATE_REGISTRY,
+        payload: response.data
+      })
+    })
+  }
+}
+
+export const createGuest = (guest) => {
+  console.log("guest in actions: ", guest)
+  return( dispatch) => {
+    axios.post('http://localhost:8000/registries/guests', guest)
+    .then((response) => {
+      dispatch({
+        type: CREATE_GUEST,
         payload: response.data
       })
     })

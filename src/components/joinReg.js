@@ -1,58 +1,202 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createRegistry } from '../redux/actions'
+import { createGuest } from '../redux/actions'
 import NavBar from './NavBar'
 
+import Autosuggest from 'react-autosuggest';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
+let suggestions = []
+
+function renderInput(inputProps) {
+  const { classes, ref, ...other } = inputProps;
+
+  return (
+    <TextField
+      fullWidth
+      InputProps={{
+        inputRef: ref,
+        classes: {
+          input: classes.input,
+        },
+        ...other,
+      }}
+    />
+  );
+}
+
+function renderSuggestion(suggestion, { query, isHighlighted }) {
+  const matches = match(suggestion.label, query);
+  const parts = parse(suggestion.label, matches);
+
+  return (
+    <MenuItem selected={isHighlighted} component="div">
+      <div>
+        {parts.map((part, index) => {
+          return part.highlight ? (
+            <span key={String(index)} style={{ fontWeight: 500 }}>
+              {part.text}
+            </span>
+          ) : (
+            <strong key={String(index)} style={{ fontWeight: 300 }}>
+              {part.text}
+            </strong>
+          );
+        })}
+      </div>
+    </MenuItem>
+  );
+}
+
+function renderSuggestionsContainer(options) {
+  const { containerProps, children } = options;
+
+  return (
+    <Paper {...containerProps} square>
+      {children}
+    </Paper>
+  );
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion.label;
+}
+
+function getSuggestions(value) {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
+  let count = 0;
+
+  return inputLength === 0
+    ? []
+    : suggestions.filter(suggestion => {
+        const keep =
+          count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
+
+        if (keep) {
+          count += 1;
+        }
+
+        return keep;
+      });
+}
 
 const styles = theme => ({
   container: {
+    marginTop: 20,
+    marginBottom: 20,
     display: 'flex',
     flexWrap: 'wrap',
+    width: 1000
+  },
+
+  suggestionsContainerOpen: {
+    position: 'absolute',
+    zIndex: 1,
+    marginTop: theme.spacing.unit,
+    left: 0,
+    right: 0,
+  },
+  suggestion: {
+    display: 'block',
+  },
+  suggestionsList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 500,
+    width: 1000,
   },
   menu: {
     width: 1000,
   },
 });
 
-const regTypes = [
-  {
-    value: 'wedding',
-    label: 'Wedding',
-  },
-  {
-    value: 'baby',
-    label: 'Baby',
-  },
-
-];
-
 class JoinReg extends React.Component {
   state = {
+    registryOwner: '',
+    suggestions: [],
     user_name: '',
     pw: '',
-    reg_type: 'wedding',
     first_name: '',
-    last_name: '',
-    description: ''
+    last_name: ''
+  };
+
+  submitHandler = (event) => {
+    let ownerId = {...this.props.registries.filter(registry => registry.reg_username === this.state.registryOwner)[0]}
+    let newGuest = {
+      guest_username: this.state.user_name,
+      guest_pw: this.state.pw,
+      guest_reg_id: ownerId.id,
+      guest_first_name: this.state.first_name,
+      guest_last_name: this.state.last_name,
+    }
+    this.props.createGuest(newGuest)
+  }
+
+  handleSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value),
+    });
+  };
+
+  handleSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
+  handleChange = (event, { newValue }) => {
+    this.setState({
+      registryOwner: newValue,
+    });
   };
 
   render() {
+    suggestions = []
+    let ownerID = []
+    this.props.registries.map(registry => {
+      return suggestions.push({ label: registry.reg_username })
+    })
+
     const { classes } = this.props;
 
     return (
       <div>
         <NavBar />
+        <Autosuggest
+          theme={{
+            container: classes.container,
+            suggestionsContainerOpen: classes.suggestionsContainerOpen,
+            suggestionsList: classes.suggestionsList,
+            suggestion: classes.suggestion,
+          }}
+          renderInputComponent={renderInput}
+          suggestions={this.state.suggestions}
+          onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+          renderSuggestionsContainer={renderSuggestionsContainer}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={{
+            classes,
+            placeholder: 'Search Registry Owners Username',
+            value: this.state.registryOwner,
+            onChange: this.handleChange,
+          }}
+        />
+
         <form className={classes.container} noValidate autoComplete="off">
           <TextField
             required
@@ -94,46 +238,14 @@ class JoinReg extends React.Component {
             onChange={(e)=>this.setState({last_name: e.target.value})}
             margin="normal"
           />
-
-          <TextField
-            id="multiline-flexible"
-            label="Message for your friends and family"
-            multiline
-            rowsMax="4"
-            value={this.state.description}
-            onChange={(e)=>this.setState({description: e.target.value})}
-            className={classes.textField}
-            margin="normal"
-          />
-
-          <TextField
-           id="select-reg-type"
-           select
-           label="Select"
-           className={classes.textField}
-           value={this.state.reg_type}
-           onChange={(e)=>this.setState({reg_type: e.target.value})}
-           SelectProps={{
-             MenuProps: {
-               className: classes.menu,
-             },
-           }}
-           helperText="Please select your registry type"
-           margin="normal"
-         >
-           {regTypes.map(option => (
-             <MenuItem key={option.value} value={option.value}>
-               {option.label}
-             </MenuItem>
-           ))}
-         </TextField>
         </form>
         <Button
         variant="contained"
         color="primary"
         className={classes.button}
-        onClick={()=>this.props.createRegistry(this.state)}
-        href={"/reg/guest/"+this.state.user_name}>
+        onClick={this.submitHandler}
+        href={`/reg/guest/${this.state.user_name}/${this.state.registryOwner}`}
+        >
           Create Registry
         </Button>
       </div>
@@ -141,10 +253,16 @@ class JoinReg extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    registries: state.registries
+  }
+}
+
 const mapDispatchToProps = dispatch => bindActionCreators({
-  createRegistry
+  createGuest
 }, dispatch)
 
-const JoinRegConnect = connect(null, mapDispatchToProps)(JoinReg)
+const JoinRegConnect = connect(mapStateToProps, mapDispatchToProps)(JoinReg)
 
 export default withStyles(styles)(JoinRegConnect);

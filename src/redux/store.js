@@ -1,14 +1,16 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import registriesReducer from './registriesReducer.js'
-import productsReducer from './productsReducer.js'
-import notificationsReducer from './notificationsReducer.js'
+import registries from './registriesReducer.js'
+import products from './productsReducer.js'
+import guests from './guestsReducer.js'
+import notifications from './notificationsReducer.js'
 import thunk from 'redux-thunk'
 
 
 const rootReducer = combineReducers({
-  registries: registriesReducer,
-  products: productsReducer,
-  notifications: notificationsReducer
+  registries,
+  products,
+  notifications,
+  guests
 })
 
 export default () => createStore(rootReducer, applyMiddleware(thunk))
