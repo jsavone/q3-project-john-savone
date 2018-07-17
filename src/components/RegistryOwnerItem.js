@@ -57,7 +57,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class RegistryItem extends Component {
+class RegistryOwnerItem extends Component {
 
   state = {
   open: false,
@@ -230,6 +230,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   claimItem
 }, dispatch)
 
-const RegistryItemConnect = connect(mapStateToProps, mapDispatchToProps)(RegistryItem)
+const RegistryOwnerItemConnect = connect(mapStateToProps, mapDispatchToProps)(RegistryOwnerItem)
 
-export default withStyles(styles)(RegistryItemConnect)
+export default withStyles(styles)(RegistryOwnerItemConnect)

@@ -7,6 +7,8 @@ export const FETCH_GUESTS = 'FETCH_GUESTS'
 export const FETCH_ITEMS = 'FETCH_ITEMS'
 export const CREATE_REGISTRY = 'CREATE_REGISTRY'
 export const CREATE_GUEST = 'CREATE_GUEST'
+export const CLAIM_ITEM = 'CLAIM_ITEM'
+export const REMOVE_ITEM = 'REMOVE_ITEM'
 
 
 export const fetchNotifications = () => {
@@ -88,6 +90,30 @@ export const createGuest = (guest) => {
     .then((response) => {
       dispatch({
         type: CREATE_GUEST,
+        payload: response.data
+      })
+    })
+  }
+}
+
+export const claimItem = (guest) => {
+  return( dispatch) => {
+    axios.patch(`http://localhost:8000/registries/items/claim/${guest.item_id}/${guest.guest_id}`)
+    .then((response) => {
+      dispatch({
+        type: CLAIM_ITEM,
+        payload: response.data
+      })
+    })
+  }
+}
+
+export const removeItem = (id) => {
+  return( dispatch) => {
+    axios.delete(`http://localhost:8000/registries/items/remove/${id}`)
+    .then((response) => {
+      dispatch({
+        type: REMOVE_ITEM,
         payload: response.data
       })
     })

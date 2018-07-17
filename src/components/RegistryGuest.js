@@ -20,12 +20,9 @@ const RegistryGuest = (props) => {
 
   const { classes } = props;
 
-  let currRegistry = {...props.registries.filter(registry => registry.reg_username === props.match.params.user_name)[0]}
   let currGuest = {...props.guests.filter(guest => guest.guest_username === props.match.params.guest_user_name)[0]}
 
-  if (currRegistry!== undefined && currGuest!== undefined && currRegistry.id !== currGuest.guest_reg_id) {
-    console.log("doesn't match")
-  }
+  let currRegistry = {...props.registries.filter(registry => registry.id === currGuest.guest_reg_id)[0]}
 
   return(
     <div>
