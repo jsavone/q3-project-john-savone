@@ -3,6 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { createRegistry } from '../redux/actions'
 import NavBar from './NavBar'
 
 
@@ -124,7 +128,12 @@ class CreateReg extends React.Component {
            ))}
          </TextField>
         </form>
-        <Button variant="contained" color="primary" className={classes.button}>
+        <Button
+        variant="contained"
+        color="primary"
+        className={classes.button}
+        onClick={()=>this.props.createRegistry(this.state)}
+        href={"/reg/owner/"+this.state.user_name}>
           Create Registry
         </Button>
       </div>
@@ -132,4 +141,10 @@ class CreateReg extends React.Component {
   }
 }
 
-export default withStyles(styles)(CreateReg);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  createRegistry
+}, dispatch)
+
+const CreateRegConnect = connect(null, mapDispatchToProps)(CreateReg)
+
+export default withStyles(styles)(CreateRegConnect);

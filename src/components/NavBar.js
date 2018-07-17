@@ -78,7 +78,7 @@ class NavBar extends Component {
                 >
                 <Avatar
                 alt="Avatar"
-                src=''
+                src='https://zcoin.io/wp-content/uploads/2017/01/blank-avatar-300x300.png'
                 className={classNames(classes.avatar, classes.bigAvatar)}
                 />
                 </IconButton>

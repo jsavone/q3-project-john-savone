@@ -5,6 +5,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Main from './components/Main'
 import Miss from './components/Miss'
 import CreateReg from './components/CreateReg'
+import JoinReg from './components/JoinReg'
+import RegistryGuest from './components/RegistryGuest'
+import RegistryOwner from './components/RegistryOwner'
 
 class App extends Component {
   render() {
@@ -15,6 +18,9 @@ class App extends Component {
           <Switch>
             <Route exact={true} path='/' component={Main}/>
             <Route exact={true} path='/create/reg' component={CreateReg}/>
+            <Route exact={true} path='/join/reg' component={JoinReg}/>
+            <Route exact={true} path='/reg/guest/:user_name' component={RegistryGuest}/>
+            <Route exact={true} path='/reg/owner/:user_name' component={RegistryOwner}/>
             <Route path='*' component={Miss} />
           </Switch>
         </div>
