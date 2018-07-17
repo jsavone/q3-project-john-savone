@@ -55,8 +55,6 @@ class NavBar extends Component {
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
-      console.log(this.props.registries[0])
-
     return (
       <div className={classes.root}>
 

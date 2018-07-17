@@ -165,7 +165,6 @@ class JoinReg extends React.Component {
 
   render() {
     suggestions = []
-    let ownerID = []
     this.props.registries.map(registry => {
       return suggestions.push({ label: registry.reg_username })
     })
