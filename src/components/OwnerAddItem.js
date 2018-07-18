@@ -92,7 +92,7 @@ handleSubmitClaim = (prod, reg) => {
 render() {
   const { classes } = this.props;
 
-  
+
 
   return (
         <Grid item xs={12} sm={6}>
@@ -188,14 +188,14 @@ render() {
                 onClose={this.handleCloseClaim}
                 aria-labelledby="form-dialog-title"
               >
-                <DialogTitle id="form-dialog-title">Confirm Add</DialogTitle>
+                <DialogTitle id="form-dialog-title">Would you like to add the {this.props.item.prod_name} to your registry?</DialogTitle>
 
                 <DialogActions>
                 <Button onClick={this.handleCloseClaim} color="primary">
                   No
                 </Button>
                   <Button onClick={()=>this.handleSubmitClaim(this.props.item.id, this.props.registry.id)} color="primary">
-                    Add to Registry
+                    Yes
                   </Button>
                 </DialogActions>
               </Dialog>

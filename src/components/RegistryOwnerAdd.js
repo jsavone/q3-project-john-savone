@@ -27,7 +27,6 @@ const RegistryOwnerAdd = (props) => {
 
   let currIds = props.items.filter(item => item.reg_id === props.registry.id).map(item => item.prod_id)
 
-
   let allProducts = props.products.map(item =>  {
     if (currIds.includes(item.id)) {
       return null
@@ -35,8 +34,6 @@ const RegistryOwnerAdd = (props) => {
     return <OwnerAddItem key={item.id} item={item} registry={props.registry} guest_id={0}/>
     }
   })
-
-
 
   return (
     <div className={classes.root}>
