@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import RegistryOwnerView from './RegistryOwnerView'
+import RegistryOwnerAdd from './RegistryOwnerAdd'
 
 const styles = {
   root: {
@@ -41,9 +42,9 @@ class RegistryOwnerTabs extends React.Component {
           </Tabs>
         </Paper>
 
-        {this.state.value === 0 ? <RegistryOwnerView registry={this.props.registry}/> : null}
+        {this.state.value === 0 ? <RegistryOwnerView registry={this.props.registry}/>
+        : <RegistryOwnerAdd registry={this.props.registry} />}
 
-        <h1 className={classes.h1}>Registry owned by {this.props.registry.reg_first_name} {this.props.registry.reg_last_name}</h1>
       </div>
     );
   }

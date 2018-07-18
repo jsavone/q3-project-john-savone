@@ -9,6 +9,7 @@ export const CREATE_REGISTRY = 'CREATE_REGISTRY'
 export const CREATE_GUEST = 'CREATE_GUEST'
 export const CLAIM_ITEM = 'CLAIM_ITEM'
 export const REMOVE_ITEM = 'REMOVE_ITEM'
+export const ADD_ITEM = 'ADD_ITEM'
 
 
 export const fetchNotifications = () => {
@@ -84,7 +85,6 @@ export const createRegistry = (registry) => {
 }
 
 export const createGuest = (guest) => {
-  console.log("guest in actions: ", guest)
   return( dispatch) => {
     axios.post('http://localhost:8000/registries/guests', guest)
     .then((response) => {
@@ -114,6 +114,18 @@ export const removeItem = (id) => {
     .then((response) => {
       dispatch({
         type: REMOVE_ITEM,
+        payload: response.data
+      })
+    })
+  }
+}
+
+export const addItem = (item) => {
+  return( dispatch) => {
+    axios.post('http://localhost:8000/registries/items/add/', item)
+    .then((response) => {
+      dispatch({
+        type: ADD_ITEM,
         payload: response.data
       })
     })

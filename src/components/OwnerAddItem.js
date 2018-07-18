@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux'
-import { removeItem } from '../redux/actions'
+import { addItem } from '../redux/actions'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -56,7 +56,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class RegistryOwnerItem extends Component {
+class OwnerAddItem extends Component {
 
   state = {
   open: false,
@@ -80,24 +80,29 @@ handleCloseClaim = () => {
   this.setState({ claimOpen: false });
 };
 
-handleSubmitClaim = (prod, guest) => {
+handleSubmitClaim = (prod, reg) => {
   this.setState({ claimOpen: false });
-  this.props.removeItem(this.props.item.id)
+  let addObj = {
+    prod_id: prod,
+    reg_id: reg
+  }
+  this.props.addItem(addObj)
 };
 
 render() {
   const { classes } = this.props;
 
-  let thisProduct = {...this.props.products.filter(product => product.id === this.props.item.prod_id)[0]}
+  
+
   return (
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-          <p><img className={classes.img} src={thisProduct.img_url} alt={thisProduct.prod_name} /></p>
+          <p><img className={classes.img} src={this.props.item.img_url} alt={this.props.item.prod_name} /></p>
           <Typography variant="subheading" gutterBottom>
-              {thisProduct.prod_name}
+              {this.props.item.prod_name}
           </Typography>
           <Typography variant="title" gutterBottom>
-              ${thisProduct.msrp}
+              ${this.props.item.msrp}
           </Typography>
 
           <div>
@@ -111,11 +116,11 @@ render() {
              aria-describedby="alert-dialog-slide-description"
            >
                <DialogTitle id="alert-dialog-slide-title">
-                 {thisProduct.prod_name}
+                 {this.props.item.prod_name}
                </DialogTitle>
                <DialogContent>
                  <DialogContentText id="alert-dialog-slide-description">
-                 {thisProduct.prod_desc}
+                 {this.props.item.prod_desc}
                  </DialogContentText>
                </DialogContent>
                <DialogActions>
@@ -137,37 +142,37 @@ render() {
                 <TableBody>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.amazon_prod_url}>
+                      <a href={this.props.item.amazon_prod_url}>
                       <img className={classes.logo} src="../../amazon-logo.png" alt="amazon logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.amazon_prod_url} className={classes.price}>
-                      ${thisProduct.amazon_sale_price}
+                      <a href={this.props.item.amazon_prod_url} className={classes.price}>
+                      ${this.props.item.amazon_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.macys_prod_url}>
+                      <a href={this.props.item.macys_prod_url}>
                       <img className={classes.logo} src="../../macys-logo.png" alt="macys logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.macys_prod_url} className={classes.price}>
-                      ${thisProduct.macys_sale_price}
+                      <a href={this.props.item.macys_prod_url} className={classes.price}>
+                      ${this.props.item.macys_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.wm_prod_url}>
+                      <a href={this.props.item.wm_prod_url}>
                       <img className={classes.logo} src="../../walmart-logo.png" alt="walmart logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.wm_prod_url} className={classes.price}>
-                      ${thisProduct.wm_sale_price}
+                      <a href={this.props.item.wm_prod_url} className={classes.price}>
+                      ${this.props.item.wm_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
@@ -175,32 +180,27 @@ render() {
               </Table>
             </Paper>
 
-          {this.props.fulfilled === 0 ?
+
             <div>
-              <Button onClick={this.handleClickOpenClaim} className={classes.claim}>Remove from Registry</Button>
+              <Button onClick={this.handleClickOpenClaim} className={classes.claim}>Add to Registry</Button>
               <Dialog
                 open={this.state.claimOpen}
                 onClose={this.handleCloseClaim}
                 aria-labelledby="form-dialog-title"
               >
-                <DialogTitle id="form-dialog-title">Confirm Product Removal</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                  Are you sure you want to remove the {thisProduct.prod_name} from your registry?
-                  </DialogContentText>
+                <DialogTitle id="form-dialog-title">Confirm Add</DialogTitle>
 
-                </DialogContent>
                 <DialogActions>
                 <Button onClick={this.handleCloseClaim} color="primary">
                   No
                 </Button>
-                  <Button onClick={()=>this.handleSubmitClaim(thisProduct.id, this.props.guest_id)} color="primary">
-                    Remove from Registry
+                  <Button onClick={()=>this.handleSubmitClaim(this.props.item.id, this.props.registry.id)} color="primary">
+                    Add to Registry
                   </Button>
                 </DialogActions>
               </Dialog>
 
-            </div> : null}
+            </div>
 
           </Paper>
         </Grid>
@@ -215,9 +215,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  removeItem
+  addItem
 }, dispatch)
 
-const RegistryOwnerItemConnect = connect(mapStateToProps, mapDispatchToProps)(RegistryOwnerItem)
+const OwnerAddItemConnect = connect(mapStateToProps, mapDispatchToProps)(OwnerAddItem)
 
-export default withStyles(styles)(RegistryOwnerItemConnect)
+export default withStyles(styles)(OwnerAddItemConnect)

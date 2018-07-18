@@ -25,9 +25,9 @@ const RegistryOwnerView = (props) => {
 
 const { classes } = props;
 
-  let addedAvailProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status === 'unfulfilled').map(item=> <RegistryOwnerItem key={item.id} item={item} guest_id={0}/>)
+  let addedAvailProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status === 'unfulfilled').map(item=> <RegistryOwnerItem key={item.id} item={item} guest_id={0} fulfilled={0} />)
 
-  let addedFulProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status !== 'unfulfilled').map(item=> <RegistryOwnerItem key={item.id} item={item} guest_id={0}/>)
+  let addedFulProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status !== 'unfulfilled').map(item=> <RegistryOwnerItem key={item.id} item={item} guest_id={0} fulfilled={1}/>)
 
   return (
     <div className={classes.root}>
