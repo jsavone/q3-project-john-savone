@@ -142,36 +142,36 @@ render() {
                 <TableBody>
                   <TableRow hover>
                     <TableCell>
-                      <a href={this.props.item.amazon_prod_url}>
+                      <a href={this.props.item.amazon_prod_url} target="_blank">
                       <img className={classes.logo} src="../../amazon-logo.png" alt="amazon logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={this.props.item.amazon_prod_url} className={classes.price}>
+                      <a href={this.props.item.amazon_prod_url} className={classes.price} target="_blank">
                       ${this.props.item.amazon_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={this.props.item.macys_prod_url}>
+                      <a href={this.props.item.macys_prod_url} target="_blank">
                       <img className={classes.logo} src="../../macys-logo.png" alt="macys logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={this.props.item.macys_prod_url} className={classes.price}>
+                      <a href={this.props.item.macys_prod_url} className={classes.price} target="_blank">
                       ${this.props.item.macys_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={this.props.item.wm_prod_url}>
+                      <a href={this.props.item.wm_prod_url} target="_blank">
                       <img className={classes.logo} src="../../walmart-logo.png" alt="walmart logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={this.props.item.wm_prod_url} className={classes.price}>
+                      <a href={this.props.item.wm_prod_url} className={classes.price} target="_blank">
                       ${this.props.item.wm_sale_price}
                       </a>
                     </TableCell>

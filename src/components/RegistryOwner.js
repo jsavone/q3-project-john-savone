@@ -8,7 +8,7 @@ const RegistryOwner = (props) => {
 
   return(
     <div>
-      <NavBar />
+      <NavBar profile_pic={currRegistry.reg_profile_pic}/>
       <RegistryOwnerTabs registry={currRegistry}/>
     </div>
   )

@@ -6,7 +6,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Avatar from '@material-ui/core/Avatar';
@@ -29,6 +28,10 @@ const styles = {
   bigAvatar: {
     width: 50,
     height: 50,
+  },
+  navLink: {
+    color: 'white',
+    textDecoration: 'none'
   },
 };
 
@@ -55,16 +58,17 @@ class NavBar extends Component {
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
+    if (this.props.type === 'owner') {
+
+    }
+
     return (
       <div className={classes.root}>
 
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              RegisTree
+              <a href="/" className={classes.navLink}>RegisTree</a>
             </Typography>
             {auth && (
               <div>
@@ -74,9 +78,10 @@ class NavBar extends Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
+
                 <Avatar
                 alt="Avatar"
-                src='https://zcoin.io/wp-content/uploads/2017/01/blank-avatar-300x300.png'
+                src={this.props.profile_pic}
                 className={classNames(classes.avatar, classes.bigAvatar)}
                 />
                 </IconButton>

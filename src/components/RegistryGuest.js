@@ -5,15 +5,22 @@ import RegistryList from './RegistryList'
 
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
 const styles = {
   root: {
     width: '100%',
     maxWidth: 500,
   },
-  display2: {
-    marginTop: 20
-  }
+  descText: {
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+desc: {
+  marginTop: 10,
+  textAlign: 'center',
+},
+
 };
 
 const RegistryGuest = (props) => {
@@ -26,13 +33,15 @@ const RegistryGuest = (props) => {
 
   return(
     <div>
-    <NavBar />
-    <Typography variant="display2" gutterBottom className={classes.display2}>
-        Hi {currGuest.guest_first_name}
-    </Typography>
-    <Typography variant="display2" gutterBottom>
-        Registry guest for {currRegistry.reg_first_name} {currRegistry.reg_last_name}
+    <NavBar profile_pic={currGuest.guest_profile_pic}/>
+    <Paper className={classes.desc}>
+      <Typography variant="title" gutterBottom className={classes.descText}>
+          Message from {currRegistry.reg_first_name} {currRegistry.reg_last_name}
       </Typography>
+      <Typography variant="subheading" gutterBottom className={classes.descText}>
+          Message from {currRegistry.reg_description}
+      </Typography>
+    </Paper>
     <RegistryList registry_id={currRegistry.id} guest_id={currGuest.id}/>
     </div>
   )

@@ -137,36 +137,36 @@ render() {
                 <TableBody>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.amazon_prod_url}>
+                      <a href={thisProduct.amazon_prod_url} target="_blank">
                       <img className={classes.logo} src="../../amazon-logo.png" alt="amazon logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.amazon_prod_url} className={classes.price}>
+                      <a href={thisProduct.amazon_prod_url} className={classes.price} target="_blank">
                       ${thisProduct.amazon_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.macys_prod_url}>
+                      <a href={thisProduct.macys_prod_url} target="_blank">
                       <img className={classes.logo} src="../../macys-logo.png" alt="macys logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.macys_prod_url} className={classes.price}>
+                      <a href={thisProduct.macys_prod_url} className={classes.price} target="_blank">
                       ${thisProduct.macys_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.wm_prod_url}>
+                      <a href={thisProduct.wm_prod_url} target="_blank">
                       <img className={classes.logo} src="../../walmart-logo.png" alt="walmart logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.wm_prod_url} className={classes.price}>
+                      <a href={thisProduct.wm_prod_url} className={classes.price} target="_blank">
                       ${thisProduct.wm_sale_price}
                       </a>
                     </TableCell>

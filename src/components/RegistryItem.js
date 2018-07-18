@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux'
-import { claimItem } from '../redux/actions'
+import { claimItem, createNotification } from '../redux/actions'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -83,11 +83,26 @@ handleCloseClaim = () => {
 
 handleSubmitClaim = (prod, guest) => {
   this.setState({ claimOpen: false });
+  let thisGuest = this.props.guests.filter(guests => guests.id === guest)[0]
+
   let claimObj = {
-    item_id: prod,
+    item_id: prod.id,
     guest_id: guest
   }
+  let notifPerson = {
+    notif_reg_id: this.props.registry_id,
+    notif_guest_id: guest,
+    notif_message: `${this.state.claimMessage} - ${thisGuest.guest_first_name} ${thisGuest.guest_last_name}`
+  }
+  let notifItem = {
+    notif_reg_id: this.props.registry_id,
+    notif_guest_id: guest,
+    notif_message: `${prod.prod_name} was purchased by ${thisGuest.guest_first_name} ${thisGuest.guest_last_name}`
+  }
+
   this.props.claimItem(claimObj)
+  this.props.createNotification(notifPerson)
+  this.props.createNotification(notifItem)
 };
 
 render() {
@@ -142,36 +157,36 @@ render() {
                 <TableBody>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.amazon_prod_url}>
+                      <a href={thisProduct.amazon_prod_url} target="_blank">
                       <img className={classes.logo} src="../../amazon-logo.png" alt="amazon logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.amazon_prod_url} className={classes.price}>
+                      <a href={thisProduct.amazon_prod_url} target="_blank" className={classes.price}>
                       ${thisProduct.amazon_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.macys_prod_url}>
+                      <a href={thisProduct.macys_prod_url} target="_blank">
                       <img className={classes.logo} src="../../macys-logo.png" alt="macys logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.macys_prod_url} className={classes.price}>
+                      <a href={thisProduct.macys_prod_url} target="_blank" className={classes.price}>
                       ${thisProduct.macys_sale_price}
                       </a>
                     </TableCell>
                   </TableRow>
                   <TableRow hover>
                     <TableCell>
-                      <a href={thisProduct.wm_prod_url}>
+                      <a href={thisProduct.wm_prod_url} target="_blank">
                       <img className={classes.logo} src="../../walmart-logo.png" alt="walmart logo"/>
                       </a>
                     </TableCell>
                     <TableCell numeric>
-                      <a href={thisProduct.wm_prod_url} className={classes.price}>
+                      <a href={thisProduct.wm_prod_url} target="_blank" className={classes.price}>
                       ${thisProduct.wm_sale_price}
                       </a>
                     </TableCell>
@@ -206,7 +221,7 @@ render() {
                 </DialogContent>
                 <DialogActions>
 
-                  <Button onClick={()=>this.handleSubmitClaim(thisProduct.id, this.props.guest_id)} color="primary">
+                  <Button onClick={()=>this.handleSubmitClaim(thisProduct, this.props.guest_id)} color="primary">
                     Claim as Purchased
                   </Button>
                 </DialogActions>
@@ -222,12 +237,14 @@ render() {
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.products,
+    guests: state.guests
   }
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  claimItem
+  claimItem,
+  createNotification,
 }, dispatch)
 
 const RegistryItemConnect = connect(mapStateToProps, mapDispatchToProps)(RegistryItem)

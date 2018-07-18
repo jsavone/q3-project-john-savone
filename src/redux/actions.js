@@ -10,6 +10,8 @@ export const CREATE_GUEST = 'CREATE_GUEST'
 export const CLAIM_ITEM = 'CLAIM_ITEM'
 export const REMOVE_ITEM = 'REMOVE_ITEM'
 export const ADD_ITEM = 'ADD_ITEM'
+export const CREATE_NOTIFICATION = 'CREATE_NOTIFICATION'
+export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION'
 
 
 export const fetchNotifications = () => {
@@ -126,6 +128,30 @@ export const addItem = (item) => {
     .then((response) => {
       dispatch({
         type: ADD_ITEM,
+        payload: response.data
+      })
+    })
+  }
+}
+
+export const createNotification = (item) => {
+  return( dispatch) => {
+    axios.post('http://localhost:8000/notifications', item)
+    .then((response) => {
+      dispatch({
+        type: CREATE_NOTIFICATION,
+        payload: response.data
+      })
+    })
+  }
+}
+
+export const deleteNotification = (id) => {
+  return( dispatch) => {
+    axios.delete(`http://localhost:8000/notifications/${id}`)
+    .then((response) => {
+      dispatch({
+        type: DELETE_NOTIFICATION,
         payload: response.data
       })
     })

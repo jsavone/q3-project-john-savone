@@ -20,7 +20,7 @@ const RegistryList = (props) => {
 const { classes } = props;
 
   let registryItems = props.items.filter(item => item.reg_id === props.registry_id && item.status ==="unfulfilled")
-      .map(item=> <RegistryItem key={item.id} item={item} guest_id={props.guest_id}/>)
+      .map(item=> <RegistryItem key={item.id} item={item} guest_id={props.guest_id} registry_id={props.registry_id}/>)
   return(
     <div className={classes.root}>
       <Grid container spacing={24}>

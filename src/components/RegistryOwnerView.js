@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import RegistryOwnerItem from './RegistryOwnerItem'
+import OwnerNotifications from './OwnerNotifications'
 import Typography from '@material-ui/core/Typography';
+
 
 const styles = theme => ({
   root: {
@@ -29,8 +31,12 @@ const { classes } = props;
 
   let addedFulProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status !== 'unfulfilled').map(item=> <RegistryOwnerItem key={item.id} item={item} guest_id={0} fulfilled={1}/>)
 
+  let currNotifications = props.notifications.filter(notif => notif.notif_reg_id === props.registry.id)
+
   return (
+
     <div className={classes.root}>
+    {currNotifications.length > 0 ? <OwnerNotifications registry={props.registry}/> : null}
       <Typography variant="display1" className={classes.heading} gutterBottom>
        Currently Available Registry Items
      </Typography>
@@ -53,7 +59,8 @@ const { classes } = props;
 
 const mapStateToProps = state => {
   return {
-    items: state.items
+    items: state.items,
+    notifications: state.notifications
   }
 }
 

@@ -8,6 +8,8 @@ import CreateReg from './components/CreateReg'
 import JoinReg from './components/JoinReg'
 import RegistryGuest from './components/RegistryGuest'
 import RegistryOwner from './components/RegistryOwner'
+import GuestLogin from './components/GuestLogin'
+import OwnerLogin from './components/OwnerLogin'
 
 class App extends Component {
   render() {
@@ -19,6 +21,8 @@ class App extends Component {
             <Route exact={true} path='/' component={Main}/>
             <Route exact={true} path='/create/reg' component={CreateReg}/>
             <Route exact={true} path='/join/reg' component={JoinReg}/>
+            <Route exact={true} path='/reg/guest/login' component={GuestLogin}/>
+            <Route exact={true} path='/reg/owner/login' component={OwnerLogin}/>
             <Route exact={true} path='/reg/guest/:guest_user_name' component={RegistryGuest}/>
             <Route exact={true} path='/reg/owner/:user_name' component={RegistryOwner}/>
             <Route path='*' component={Miss} />
