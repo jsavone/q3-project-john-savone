@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux'
 import { removeItem } from '../redux/actions'
 import Paper from '@material-ui/core/Paper';
@@ -18,6 +18,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import lightGreen from '@material-ui/core/colors/lightGreen';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: lightGreen,
+  },
+});
 
 const styles = theme => ({
   root: {
@@ -91,6 +98,7 @@ render() {
   let thisProduct = {...this.props.products.filter(product => product.id === this.props.item.prod_id)[0]}
   return (
         <Grid item xs={12} sm={6}>
+        <MuiThemeProvider theme={theme}>
           <Paper className={classes.paper}>
           <p><img className={classes.img} src={thisProduct.img_url} alt={thisProduct.prod_name} /></p>
           <Typography variant="subheading" gutterBottom>
@@ -101,7 +109,7 @@ render() {
           </Typography>
 
           <div>
-           <Button onClick={this.handleClickOpen}>View Description</Button>
+           <Button onClick={this.handleClickOpen} color="primary">View Description</Button>
            <Dialog
              open={this.state.open}
              TransitionComponent={Transition}
@@ -177,7 +185,7 @@ render() {
 
           {this.props.fulfilled === 0 ?
             <div>
-              <Button onClick={this.handleClickOpenClaim} className={classes.claim}>Remove from Registry</Button>
+              <Button onClick={this.handleClickOpenClaim} className={classes.claim} color="primary">Remove from Registry</Button>
               <Dialog
                 open={this.state.claimOpen}
                 onClose={this.handleCloseClaim}
@@ -203,6 +211,7 @@ render() {
             </div> : null}
 
           </Paper>
+          </MuiThemeProvider>
         </Grid>
   )
 }

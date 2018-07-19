@@ -1,10 +1,17 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import RegistryOwnerView from './RegistryOwnerView'
 import RegistryOwnerAdd from './RegistryOwnerAdd'
+import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import lightGreen from '@material-ui/core/colors/lightGreen';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: lightGreen,
+  },
+});
 
 const styles = {
   root: {
@@ -29,6 +36,7 @@ class RegistryOwnerTabs extends React.Component {
 
     return (
       <div>
+      <MuiThemeProvider theme={theme} >
         <Paper className={classes.root}>
           <Tabs
             value={this.state.value}
@@ -41,7 +49,7 @@ class RegistryOwnerTabs extends React.Component {
             <Tab label="Add More Items" />
           </Tabs>
         </Paper>
-
+        </MuiThemeProvider>
         {this.state.value === 0 ? <RegistryOwnerView registry={this.props.registry}/>
         : <RegistryOwnerAdd registry={this.props.registry} />}
 

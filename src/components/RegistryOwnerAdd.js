@@ -1,9 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import OwnerAddItem from './OwnerAddItem'
 import Typography from '@material-ui/core/Typography';
+import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import lightGreen from '@material-ui/core/colors/lightGreen';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: lightGreen,
+  },
+});
 
 const styles = theme => ({
   root: {
@@ -37,6 +44,7 @@ const RegistryOwnerAdd = (props) => {
 
   return (
     <div className={classes.root}>
+    <MuiThemeProvider theme={theme}>
       <Typography variant="display1" className={classes.heading} gutterBottom>
        Add Items to your Registry
      </Typography>
@@ -44,6 +52,7 @@ const RegistryOwnerAdd = (props) => {
       <Grid container spacing={24}>
         {allProducts}
       </Grid>
+      </MuiThemeProvider>
     </div>
   )
 }

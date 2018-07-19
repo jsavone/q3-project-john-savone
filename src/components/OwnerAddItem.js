@@ -106,7 +106,7 @@ render() {
           </Typography>
 
           <div>
-           <Button onClick={this.handleClickOpen}>View Description</Button>
+           <Button onClick={this.handleClickOpen} color="primary">View Description</Button>
            <Dialog
              open={this.state.open}
              TransitionComponent={Transition}
@@ -182,7 +182,7 @@ render() {
 
 
             <div>
-              <Button onClick={this.handleClickOpenClaim} className={classes.claim}>Add to Registry</Button>
+              <Button onClick={this.handleClickOpenClaim} className={classes.claim} color="primary">Add to Registry</Button>
               <Dialog
                 open={this.state.claimOpen}
                 onClose={this.handleCloseClaim}
