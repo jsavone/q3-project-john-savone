@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux'
-import { claimItem, createNotification } from '../redux/actions'
+import { claimItem, createNotification } from '../../redux/actions'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -65,7 +65,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class RegistryItem extends Component {
+class GuestRegistryItem extends Component {
 
   state = {
   open: false,
@@ -115,6 +115,9 @@ handleSubmitClaim = (prod, guest) => {
 
 render() {
   const { classes } = this.props;
+
+  let registrant = {...this.props.registries.filter(registry => registry.id === this.props.registry_id)[0]}
+
 
 
   let thisProduct = {...this.props.products.filter(product => product.id === this.props.item.prod_id)[0]}
@@ -217,13 +220,13 @@ render() {
                 <DialogTitle id="form-dialog-title">Claim as Purchased</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Let the registrant know you completed the purchase. This will remove the product from their registry.
+                    {`Let ${registrant.reg_first_name} know you completed the purchase. This will remove the product from their registry.`}
                   </DialogContentText>
                   <TextField
                     autoFocus
                     margin="dense"
                     id="message"
-                    label="Send a message to the registrant"
+                    label={"Send a message to "+registrant.reg_first_name}
                     type="text"
                     color="default"
                     onChange={(e)=>this.setState({claimMessage: e.target.value})}
@@ -251,7 +254,8 @@ render() {
 const mapStateToProps = state => {
   return {
     products: state.products,
-    guests: state.guests
+    guests: state.guests,
+    registries: state.registries
   }
 }
 
@@ -260,6 +264,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createNotification,
 }, dispatch)
 
-const RegistryItemConnect = connect(mapStateToProps, mapDispatchToProps)(RegistryItem)
+const GuestRegistryItemConnect = connect(mapStateToProps, mapDispatchToProps)(GuestRegistryItem)
 
-export default withStyles(styles)(RegistryItemConnect)
+export default withStyles(styles)(GuestRegistryItemConnect)

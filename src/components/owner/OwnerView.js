@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import RegistryOwnerItem from './RegistryOwnerItem'
+import OwnerItem from './OwnerItem'
 import OwnerNotifications from './OwnerNotifications'
 import Typography from '@material-ui/core/Typography';
 
@@ -23,13 +23,13 @@ const styles = theme => ({
   },
 });
 
-const RegistryOwnerView = (props) => {
+const OwnerView = (props) => {
 
 const { classes } = props;
 
-  let addedAvailProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status === 'unfulfilled').map(item=> <RegistryOwnerItem key={item.id} item={item} guest_id={0} fulfilled={0} />)
+  let addedAvailProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status === 'unfulfilled').map(item=> <OwnerItem key={item.id} item={item} guest_id={0} fulfilled={0} />)
 
-  let addedFulProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status !== 'unfulfilled').map(item=> <RegistryOwnerItem key={item.id} item={item} guest_id={0} fulfilled={1}/>)
+  let addedFulProducts = props.items.filter(item => item.reg_id === props.registry.id && item.status !== 'unfulfilled').map(item=> <OwnerItem key={item.id} item={item} guest_id={0} fulfilled={1}/>)
 
   let currNotifications = props.notifications.filter(notif => notif.notif_reg_id === props.registry.id)
 
@@ -64,6 +64,6 @@ const mapStateToProps = state => {
   }
 }
 
-const RegistryOwnerViewConnect = connect(mapStateToProps)(RegistryOwnerView)
+const OwnerViewConnect = connect(mapStateToProps)(OwnerView)
 
-export default withStyles(styles)(RegistryOwnerViewConnect)
+export default withStyles(styles)(OwnerViewConnect)

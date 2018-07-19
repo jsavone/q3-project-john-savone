@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { bindActionCreators } from 'redux'
-import { removeItem } from '../redux/actions'
+import { removeItem } from '../../redux/actions'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -63,7 +63,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class RegistryOwnerItem extends Component {
+class OwnerItem extends Component {
 
   state = {
   open: false,
@@ -227,6 +227,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeItem
 }, dispatch)
 
-const RegistryOwnerItemConnect = connect(mapStateToProps, mapDispatchToProps)(RegistryOwnerItem)
+const OwnerItemConnect = connect(mapStateToProps, mapDispatchToProps)(OwnerItem)
 
-export default withStyles(styles)(RegistryOwnerItemConnect)
+export default withStyles(styles)(OwnerItemConnect)

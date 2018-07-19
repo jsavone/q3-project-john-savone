@@ -2,8 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createGuest } from '../redux/actions'
-import NavBar from './NavBar'
+import { createGuest } from '../../redux/actions'
+import NavBar from '../NavBar'
 
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -11,8 +11,15 @@ import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import lightGreen from '@material-ui/core/colors/lightGreen';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: lightGreen,
+  },
+});
 
 let suggestions = []
 
@@ -123,7 +130,7 @@ const styles = theme => ({
   },
 });
 
-class JoinReg extends React.Component {
+class GuestJoin extends React.Component {
   state = {
     registryOwner: '',
     suggestions: [],
@@ -174,79 +181,81 @@ class JoinReg extends React.Component {
     return (
       <div>
         <NavBar />
-        <Autosuggest
-          theme={{
-            container: classes.container,
-            suggestionsContainerOpen: classes.suggestionsContainerOpen,
-            suggestionsList: classes.suggestionsList,
-            suggestion: classes.suggestion,
-          }}
-          renderInputComponent={renderInput}
-          suggestions={this.state.suggestions}
-          onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-          renderSuggestionsContainer={renderSuggestionsContainer}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={{
-            classes,
-            placeholder: 'Search Registry Owners Username',
-            value: this.state.registryOwner,
-            onChange: this.handleChange,
-          }}
-        />
-
-        <form className={classes.container} noValidate autoComplete="off">
-          <TextField
-            required
-            id="username"
-            label="Username"
-            className={classes.textField}
-            value={this.state.user_name}
-            onChange={(e)=>this.setState({user_name: e.target.value})}
-            margin="normal"
+        <MuiThemeProvider theme={theme}>
+          <Autosuggest
+            theme={{
+              container: classes.container,
+              suggestionsContainerOpen: classes.suggestionsContainerOpen,
+              suggestionsList: classes.suggestionsList,
+              suggestion: classes.suggestion,
+            }}
+            renderInputComponent={renderInput}
+            suggestions={this.state.suggestions}
+            onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+            renderSuggestionsContainer={renderSuggestionsContainer}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={{
+              classes,
+              placeholder: 'Search Registry Owners Username',
+              value: this.state.registryOwner,
+              onChange: this.handleChange,
+            }}
           />
 
-          <TextField
-            required
-            id="password-input"
-            label="Password"
-            className={classes.textField}
-            type="password"
-            value={this.state.pw}
-            onChange={(e)=>this.setState({pw: e.target.value})}
-            margin="normal"
-          />
+          <form className={classes.container} noValidate autoComplete="off">
+            <TextField
+              required
+              id="username"
+              label="Username"
+              className={classes.textField}
+              value={this.state.user_name}
+              onChange={(e)=>this.setState({user_name: e.target.value})}
+              margin="normal"
+            />
 
-          <TextField
-            required
-            id="first-name"
-            label="First Name"
-            className={classes.textField}
-            value={this.state.first_name}
-            onChange={(e)=>this.setState({first_name: e.target.value})}
-            margin="normal"
-          />
+            <TextField
+              required
+              id="password-input"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              value={this.state.pw}
+              onChange={(e)=>this.setState({pw: e.target.value})}
+              margin="normal"
+            />
 
-          <TextField
-            required
-            id="last-name"
-            label="Last Name"
-            className={classes.textField}
-            value={this.state.last_name}
-            onChange={(e)=>this.setState({last_name: e.target.value})}
-            margin="normal"
-          />
-        </form>
-        <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        onClick={this.submitHandler}
-        href={`/reg/guest/${this.state.user_name}/${this.state.registryOwner}`}
-        >
-          Create Registry
-        </Button>
+            <TextField
+              required
+              id="first-name"
+              label="First Name"
+              className={classes.textField}
+              value={this.state.first_name}
+              onChange={(e)=>this.setState({first_name: e.target.value})}
+              margin="normal"
+            />
+
+            <TextField
+              required
+              id="last-name"
+              label="Last Name"
+              className={classes.textField}
+              value={this.state.last_name}
+              onChange={(e)=>this.setState({last_name: e.target.value})}
+              margin="normal"
+            />
+          </form>
+          <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          onClick={this.submitHandler}
+          href={`/reg/guest/${this.state.user_name}/${this.state.registryOwner}`}
+          >
+            Create Registry
+          </Button>
+        </MuiThemeProvider>
       </div>
     );
   }
@@ -262,6 +271,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createGuest
 }, dispatch)
 
-const JoinRegConnect = connect(mapStateToProps, mapDispatchToProps)(JoinReg)
+const GuestJoinConnect = connect(mapStateToProps, mapDispatchToProps)(GuestJoin)
 
-export default withStyles(styles)(JoinRegConnect);
+export default withStyles(styles)(GuestJoinConnect);

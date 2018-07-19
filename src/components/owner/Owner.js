@@ -1,15 +1,15 @@
 import React from 'react'
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import { connect } from 'react-redux'
-import RegistryOwnerTabs from './RegistryOwnerTabs'
+import OwnerTabs from './OwnerTabs'
 
-const RegistryOwner = (props) => {
+const Owner = (props) => {
   let currRegistry = {...props.registries.filter(registry => registry.reg_username === props.match.params.user_name)[0]}
 
   return(
     <div>
       <NavBar profile_pic={currRegistry.reg_profile_pic}/>
-      <RegistryOwnerTabs registry={currRegistry}/>
+      <OwnerTabs registry={currRegistry}/>
     </div>
   )
 }
@@ -20,4 +20,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(RegistryOwner)
+export default connect(mapStateToProps)(Owner)

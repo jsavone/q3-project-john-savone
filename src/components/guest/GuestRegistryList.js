@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import RegistryItem from './RegistryItem'
+import GuestRegistryItem from './GuestRegistryItem'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -15,12 +15,12 @@ const styles = theme => ({
   },
 });
 
-const RegistryList = (props) => {
+const GuestRegistryList = (props) => {
 
 const { classes } = props;
 
   let registryItems = props.items.filter(item => item.reg_id === props.registry_id && item.status ==="unfulfilled")
-      .map(item=> <RegistryItem key={item.id} item={item} guest_id={props.guest_id} registry_id={props.registry_id}/>)
+      .map(item=> <GuestRegistryItem key={item.id} item={item} guest_id={props.guest_id} registry_id={props.registry_id}/>)
   return(
     <div className={classes.root}>
       <Grid container spacing={24}>
@@ -36,6 +36,6 @@ const mapStateToProps = state => {
   }
 }
 
-const RegistryListConnect = connect(mapStateToProps)(RegistryList)
+const GuestRegistryListConnect = connect(mapStateToProps)(GuestRegistryList)
 
-export default withStyles(styles)(RegistryListConnect)
+export default withStyles(styles)(GuestRegistryListConnect)

@@ -28,7 +28,7 @@ const styles = theme => ({
   },
 });
 
-const RegistryOwnerAdd = (props) => {
+const OwnerAddList = (props) => {
 
   const { classes } = props;
 
@@ -64,6 +64,6 @@ const mapStateToProps = state => {
   }
 }
 
-const RegistryOwnerAddConnect = connect(mapStateToProps)(RegistryOwnerAdd)
+const OwnerAddListConnect = connect(mapStateToProps)(OwnerAddList)
 
-export default withStyles(styles)(RegistryOwnerAddConnect)
+export default withStyles(styles)(OwnerAddListConnect)

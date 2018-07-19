@@ -1,7 +1,7 @@
 import React from 'react'
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import { connect } from 'react-redux'
-import RegistryList from './RegistryList'
+import GuestRegistryList from './GuestRegistryList'
 
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -29,7 +29,7 @@ bigAvatar: {
 
 };
 
-const RegistryGuest = (props) => {
+const GuestRegistry = (props) => {
 
   const { classes } = props;
 
@@ -49,7 +49,7 @@ const RegistryGuest = (props) => {
         {currRegistry.reg_description}
       </Typography>
     </Paper>
-    <RegistryList registry_id={currRegistry.id} guest_id={currGuest.id}/>
+    <GuestRegistryList registry_id={currRegistry.id} guest_id={currGuest.id}/>
     </div>
   )
 }
@@ -61,6 +61,6 @@ const mapStateToProps = state => {
   }
 }
 
-const RegistryGuestConnect = connect(mapStateToProps)(RegistryGuest)
+const GuestRegistryConnect = connect(mapStateToProps)(GuestRegistry)
 
-export default withStyles(styles)(RegistryGuestConnect)
+export default withStyles(styles)(GuestRegistryConnect)
